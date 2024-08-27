@@ -48,6 +48,8 @@ CREATE TABLE dept_manager (
     FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
+-- Import each csv file to the corresponding table.
+
 -- Set datestyle to US format (MM/DD/YYYY) to avoid datestyle error
 SET datestyle = 'ISO, MDY';
 
