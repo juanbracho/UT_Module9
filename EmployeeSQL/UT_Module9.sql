@@ -1,18 +1,16 @@
--- Create the tables taking into account primary keys, foreign keys, and constraints.
- 
--- Create Titles Table
+-- 1. Create Titles Table
 CREATE TABLE titles (
     title_id VARCHAR(10) PRIMARY KEY,
-    title VARCHAR(255) NOT NULL
+    title VARCHAR(30) NOT NULL
 );
 
--- Create Departments Table
+-- 2. Create Departments Table
 CREATE TABLE departments (
     dept_no CHAR(4) PRIMARY KEY,
     dept_name VARCHAR(40) NOT NULL
 );
 
--- Create Employees Table
+-- 3. Create Employees Table
 CREATE TABLE employees (
     emp_no INT PRIMARY KEY,
     emp_title_id VARCHAR(10),
@@ -24,14 +22,15 @@ CREATE TABLE employees (
     FOREIGN KEY (emp_title_id) REFERENCES titles(title_id)
 );
 
--- Create Salaries Table
+-- 4. Create Salaries Table
 CREATE TABLE salaries (
     emp_no INT,
     salary INT NOT NULL,
+    PRIMARY KEY (emp_no),
     FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 );
 
--- Create Department Employees Table
+-- 5. Create Department Employees Table
 CREATE TABLE dept_emp (
     emp_no INT,
     dept_no CHAR(4),
@@ -40,48 +39,21 @@ CREATE TABLE dept_emp (
     FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
--- Create Department Managers Table
+-- 6. Create Department Managers Table
 CREATE TABLE dept_manager (
-    emp_no INT,
     dept_no CHAR(4),
+	emp_no INT,
     PRIMARY KEY (emp_no, dept_no),
     FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
     FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
--- Import Scripts
-
--- Import data into titles table
-COPY titles(title_id, title)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/titles.csv'
-DELIMITER ',' CSV HEADER;
-
--- Import data into departments table
-COPY departments(dept_no, dept_name)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/departments.csv'
-DELIMITER ',' CSV HEADER;
-
 -- Set datestyle to US format (MM/DD/YYYY) to avoid datestyle error
 SET datestyle = 'ISO, MDY';
 
--- Import data into employees table
+-- If datestyle still an issue import through the following code.
 COPY employees(emp_no, emp_title_id, birth_date, first_name, last_name, sex, hire_date)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/employees.csv'
-DELIMITER ',' CSV HEADER;
-
--- Import data into salaries table
-COPY salaries(emp_no, salary)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/salaries.csv'
-DELIMITER ',' CSV HEADER;
-
--- Import data into dept_emp table
-COPY dept_emp(emp_no, dept_no)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/dept_emp.csv'
-DELIMITER ',' CSV HEADER;
-
--- Import data into dept_manager table
-COPY dept_manager(dept_no, emp_no)
-FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/dept_manager.csv'
+FROM 'C:\Program Files\PostgreSQL\16\data\CSV Files/employees.csv' -- Adjust path accordingly.
 DELIMITER ',' CSV HEADER;
 
 -- Query Selection
