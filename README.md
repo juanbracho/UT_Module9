@@ -7,7 +7,7 @@ This module focuses on SQL (Structured Query Language) to perform data modeling,
 
 ## 9.1: Introduction to SQL
 
-### What You'll Learn
+### What We Learn
 - Running PostgreSQL and pgAdmin.
 - Creating databases and tables.
 - Defining SQL data types, primary keys, and unique values.
@@ -15,63 +15,12 @@ This module focuses on SQL (Structured Query Language) to perform data modeling,
 - Performing CRUD operations (Create, Read, Update, Delete).
 - Combining data from multiple tables with JOIN clauses.
 
-### Example Code Snippets
-- **Creating a Table:**
-    ```sql
-    CREATE TABLE employees (
-        employee_number SERIAL PRIMARY KEY,
-        last_name VARCHAR(50),
-        first_name VARCHAR(50),
-        hire_date DATE,
-        department_id INT,
-        salary DECIMAL(10, 2)
-    );
-    ```
-
-- **Inserting Data:**
-    Use pgAdmin or `COPY` command to import CSV data:
-    ```sql
-    COPY employees FROM '/path/to/employees.csv' DELIMITER ',' CSV HEADER;
-    ```
-
-- **Basic Query:**
-    ```sql
-    SELECT * FROM employees;
-    ```
-
----
-
 ## 9.2: Advanced SQL Queries
 
-### What You'll Learn
+### What We Learn
 - Writing aggregate queries using `GROUP BY`, `HAVING`, and `ORDER BY`.
 - Creating and using subqueries.
 - Designing and querying views.
-
-### Example Code Snippets
-- **Aggregate Query:**
-    ```sql
-    SELECT department_id, AVG(salary) AS avg_salary
-    FROM employees
-    GROUP BY department_id
-    ORDER BY avg_salary DESC;
-    ```
-
-- **Subquery Example:**
-    ```sql
-    SELECT last_name, first_name, salary
-    FROM employees
-    WHERE salary = (SELECT MAX(salary) FROM employees);
-    ```
-
-- **Creating a View:**
-    ```sql
-    CREATE VIEW department_summary AS
-    SELECT d.department_name, COUNT(e.employee_number) AS total_employees, AVG(e.salary) AS avg_salary
-    FROM departments d
-    JOIN employees e ON d.department_id = e.department_id
-    GROUP BY d.department_name;
-    ```
 
 ---
 
@@ -81,25 +30,6 @@ This module focuses on SQL (Structured Query Language) to perform data modeling,
 - Creating entity-relationship diagrams (ERDs) to design a database schema.
 - Normalizing data for optimal database performance.
 - Designing schemas with foreign key constraints and composite keys.
-
-### Example Schema
-- **Departments and Projects Example:**
-    ```sql
-    CREATE TABLE projects (
-        project_id SERIAL PRIMARY KEY,
-        project_name VARCHAR(100),
-        start_date DATE,
-        end_date DATE
-    );
-
-    CREATE TABLE tasks (
-        task_id SERIAL PRIMARY KEY,
-        task_name VARCHAR(100),
-        project_id INT REFERENCES projects(project_id),
-        assigned_to INT REFERENCES employees(employee_number),
-        due_date DATE
-    );
-    ```
 
 ---
 
